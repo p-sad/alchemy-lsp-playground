@@ -14,6 +14,9 @@ def session_query():
     name = people[0].name
     person_address = list(people[0].addresses)[0]
     person_street = list(people[0].addresses)[0].street
+    # can still use type assertion if feeling confident
+    typed_person: Person = people[1]
+    city_name = list(typed_person.addresses)[0].city.name
 
     addresses = Session.query(Address).join(Address.postal_code).join(Address.postal_code.city).all()
     address = addresses[0]
@@ -29,5 +32,6 @@ def typed_param(person: Person) -> Address:
     return address
 
 
-# def select():
-#     person = Session.execute(select(Person)).first()
+def select():
+    # Worse type support than legacy query
+    person = Session.execute(select(Person)).first()
